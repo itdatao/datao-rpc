@@ -1,0 +1,3 @@
+kryo=org.club.qy.serialize.impl.KryoSerializer
+hessian2=org.club.qy.serialize.impl.Hessian2Serializer
+protostuff=org.club.qy.serialize.impl.ProtostuffSerializer
