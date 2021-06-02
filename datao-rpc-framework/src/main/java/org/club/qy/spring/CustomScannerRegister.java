@@ -14,6 +14,7 @@ import org.springframework.core.type.StandardAnnotationMetadata;
 import org.springframework.stereotype.Component;
 
 /**
+ * 自定义包扫描
  * @Author hht
  * @Date 2021/5/19 18:13
  */
@@ -46,8 +47,10 @@ public class CustomScannerRegister implements ImportBeanDefinitionRegistrar, Res
             rpcServiceScanner.setResourceLoader(resourceLoader);
             componentScanner.setResourceLoader(resourceLoader);
         }
+        //输出使用component注解的类
         int springScannerCount = componentScanner.scan(SPRING_BEAN_BASE_PACKAGE);
         log.info("componentScanner 扫描实例的数量：{}",springScannerCount);
+        //输出使用RpcScan注解的类
         int rpcServiceScannerCount = rpcServiceScanner.scan(rpcBasePackages);
         log.info("rpcServiceScanner 扫描的实例数量：{}",rpcServiceScannerCount);
 

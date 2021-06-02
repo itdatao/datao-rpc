@@ -16,5 +16,4 @@ public class ClientMain {
         HelloController helloController = (HelloController) applicationContext.getBean("helloController");
         helloController.test();
     }
-
 }
