@@ -11,7 +11,7 @@
 - Kryo序列化
 - Hessian序列化
 - protostuff序列化
-- 客户端可以自定义选择消息序列化算法
+- 客户端可以自定义选择消息序列化算法（待做）
 ## 解决粘包半包问题
 - 定长消息 FixedLengthFrameDecoder
 - 分隔符
