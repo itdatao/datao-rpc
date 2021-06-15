@@ -6,7 +6,6 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.club.qy.config.RpcServiceConfig;
 import org.club.qy.config.ShutdownHook;
 import org.club.qy.constants.Constants;
-import org.club.qy.entity.RpcServiceProperties;
 import org.club.qy.factory.SingletonFactory;
 import org.club.qy.netty.codec.RpcMessageDecoder;
 import org.club.qy.netty.codec.RpcMessageEncoder;
@@ -53,9 +51,7 @@ public class RpcServer  {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         DefaultEventExecutorGroup serviceHandlerGroup = new DefaultEventExecutorGroup(
-                CpuUtils.getCpu() * 2
-                //ThreadPoolFactoryUtils.createThreadFactory("service-handler-group", false)
-        );
+                CpuUtils.getCpu() * 2);
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)

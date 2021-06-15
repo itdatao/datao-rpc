@@ -4,8 +4,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.club.qy.annotation.RpcReference;
 import org.club.qy.config.RpcServiceConfig;
-import org.club.qy.entity.RpcServiceProperties;
-import org.club.qy.extension.ExtensionLoader;
 import org.club.qy.factory.SingletonFactory;
 import org.club.qy.netty.RpcRequestTransport;
 import org.club.qy.annotation.RpcService;
@@ -43,6 +41,7 @@ public class SpringBeanPostProcessor implements BeanPostProcessor {
         for (Field declaredField : declaredFields) {
             RpcReference rpcReference = declaredField.getAnnotation(RpcReference.class);
             if (rpcReference != null) {
+
                 RpcServiceConfig rpcServiceConfig = RpcServiceConfig.builder()
                         .group(rpcReference.group())
                         .version(rpcReference.version()).build();

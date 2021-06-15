@@ -6,9 +6,11 @@ import org.club.qy.entity.RpcRequest;
 import org.club.qy.enums.RpcErrorMessage;
 import org.club.qy.exception.RpcException;
 import org.club.qy.extension.ExtensionLoader;
+import org.club.qy.factory.SingletonFactory;
 import org.club.qy.loadbalance.LoadBalance;
 import org.club.qy.register.ServiceDiscover;
 import org.club.qy.utils.CuratorUtils;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -23,7 +25,9 @@ public class ZkServiceDiscover implements ServiceDiscover {
 
     public ZkServiceDiscover() {
         // todo 根据SPI 选择指定负载均衡算法
+
         this.loadBalance =  ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension("loadBalance");
+
     }
 
     @Override

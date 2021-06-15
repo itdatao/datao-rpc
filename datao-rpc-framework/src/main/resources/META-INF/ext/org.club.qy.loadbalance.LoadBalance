@@ -1,1 +1,3 @@
 loadBalance=org.club.qy.loadbalance.ConsistentHashLoadBalance
+random=org.club.qy.loadbalance.RandomLoadBalance
+polling=org.club.qy.loadbalance.PollingLoadBalance

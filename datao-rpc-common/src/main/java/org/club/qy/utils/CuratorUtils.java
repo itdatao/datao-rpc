@@ -110,7 +110,7 @@ public class CuratorUtils {
                 .retryPolicy(retry)
                 .build();
         zkClient.start();
-        ;
+
         //如果超30s还没连上zookeeper，直接抛异常
         try {
             if (!zkClient.blockUntilConnected(30, TimeUnit.SECONDS)) {
