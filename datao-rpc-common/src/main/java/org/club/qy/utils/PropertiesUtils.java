@@ -28,7 +28,6 @@ public class PropertiesUtils {
      */
     public static Properties getProperties(String fileName){
 
-
         URL url = Thread.currentThread().getContextClassLoader().getResource("");
         String rpcConfigPath = "";
         if (url != null) {

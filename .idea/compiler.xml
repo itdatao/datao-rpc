@@ -10,8 +10,8 @@
         <module name="datao-rpc-server" />
         <module name="datao-rpc-api" />
         <module name="datao-rpc-framework" />
-        <module name="datao-rpc-common" />
         <module name="datao-rpc-client" />
+        <module name="datao-rpc-common" />
       </profile>
     </annotationProcessing>
   </component>

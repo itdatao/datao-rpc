@@ -69,7 +69,5 @@ public class RpcMessageEncoder extends MessageToByteEncoder<RpcMessage> {
             log.error("encode process error...{}",e.getMessage());
         }
 
-
-
     }
 }

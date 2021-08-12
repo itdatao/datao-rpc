@@ -35,15 +35,26 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
             selectors.put(rpcServiceName, new ConsistentHashSelector(serviceAddress, 160, identityHashCode));
             selector = selectors.get(rpcServiceName);
         }
+        //方法名+参数
         return selector.selector(rpcServiceName + Arrays.stream(rpcRequest.getParameters()));
     }
 
 
     private static final class ConsistentHashSelector {
+        //存储Hash值与节点映射关系的TreeMap
         private final TreeMap<Long, String> virtualInvokers;
-
+        //用来识别Invoker列表是否发生变更的Hash码
         private final int identityHashCode;
 
+        /**
+         * 以replicaNumber取默认值160为例，
+         * 假设当前遍历到的Invoker地址为127.0.0.1:20880，
+         * 它会依次获得“127.0.0.1:208800”、“127.0.0.1:208801”、……、“127.0.0.1:2088040”的md5摘要，
+         * 在每次获得摘要之后，还会对该摘要进行四次数位级别的散列。大致可以猜到其目的应该是为了加强散列效果。
+         * @param invokers 服务列表
+         * @param replicaNumber  节点数目
+         * @param identityHashCode hash码
+         */
         public ConsistentHashSelector(List<String> invokers, int replicaNumber, int identityHashCode) {
             this.virtualInvokers = new TreeMap<>();
             this.identityHashCode = identityHashCode;
@@ -58,12 +69,18 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
             }
         }
 
+        /**
+         * 返回大于请求Hash的第一个服务节点
+         * @param serviceName
+         * @return
+         */
         public String selector(String serviceName) {
             byte[] bytes = md5(serviceName);
             long hashCode = hash(bytes, 0);
 
             Map.Entry<Long, String> entry = virtualInvokers.tailMap(hashCode, true).firstEntry();
 
+            //如果没有大于该请求的hash节点，就使用环中第一个节点
             if (entry == null) {
                 entry = virtualInvokers.firstEntry();
             }
@@ -84,6 +101,12 @@ public class ConsistentHashLoadBalance extends AbstractLoadBalance {
             return md.digest();
         }
 
+        /**
+         * int&0xFF目的是保持二进制补码的一致性
+         * @param digest
+         * @param number
+         * @return
+         */
         private long hash(byte[] digest, int number) {
             return (((long) (digest[3 + number * 4] & 0xFF) << 24)
                     | ((long) (digest[2 + number * 4] & 0xFF) << 16)

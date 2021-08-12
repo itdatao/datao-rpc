@@ -58,9 +58,10 @@ public class RpcServer  {
                     .channel(NioServerSocketChannel.class)
                     // TCP默认开启了 Nagle 算法，该算法的作用是尽可能的发送大数据快，减少网络传输。TCP_NODELAY 参数的作用就是控制是否启用 Nagle 算法。
                     .childOption(ChannelOption.TCP_NODELAY, true)
-                    // 是否开启 TCP 底层心跳机制
+                    // 是否开启 TCP 底层心跳机制 默认的心跳间隔是7200s即2小时。Netty默认关闭该功能。
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    //表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数
+                    //表示系统用于临时存放已完成三次握手的请求的队列的最大长度,如果连接建立频繁，服务器处理创建新连接较慢，可以适当调大这个参数  
+                    // Socket参数，服务端接受连接的队列长度，如果队列已满，客户端连接将被拒绝。默认值，Windows为200，其他为128。
                     .option(ChannelOption.SO_BACKLOG, Constants.MAX_BLOCK_QUEUE_SIZE)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     // 当客户端第一次进行请求的时候才会进行初始化

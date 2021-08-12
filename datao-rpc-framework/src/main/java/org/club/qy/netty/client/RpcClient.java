@@ -45,14 +45,13 @@ public class RpcClient implements RpcRequestTransport {
         bootstrap.group(eventLoopGroup)
                 .channel(NioSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.INFO))
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000) //Connect_timeout_millis 连接超时时间
                 .handler(new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
                         //心跳检测 如果5秒内没有发送数据，客户端就会向服务器发送心跳数据包
                         pipeline.addLast(new IdleStateHandler(0, 5, 0, TimeUnit.SECONDS));
-                        //todo 编解码器
                         pipeline.addLast(new RpcMessageDecoder());
                         pipeline.addLast(new RpcMessageEncoder());
                         pipeline.addLast(new RpcClientHandler());

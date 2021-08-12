@@ -18,6 +18,5 @@ public @interface RpcReference {
      */
     String group() default "";
 
-    String loadbalance() default "random";
 
 }
