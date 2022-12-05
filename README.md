@@ -25,7 +25,7 @@
 - Gzip
 - zip
 ## 心跳检测
-- Netty IdleStateHandler  30m内没收到客户端发送的心跳数据包就关闭连接
+- Netty IdleStateHandler  30s内没收到客户端发送的心跳数据包就关闭连接
 
 ## 使用方式
 **服务提供端（Server端）**
